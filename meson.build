@@ -3,6 +3,7 @@ project('carsgame', 'cpp',
 
 deps = [
     dependency('sdl3'),
+    dependency('sdl3-image'),
 ]
 
 src = [
