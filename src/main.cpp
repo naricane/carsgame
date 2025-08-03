@@ -1,11 +1,6 @@
+#include "Math.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
-#include <cmath>
-
-struct Vec2
-{
-	float x, y;
-};
 
 class Car
 {
@@ -38,7 +33,8 @@ public:
 		if (keys[SDL_SCANCODE_RIGHT]) {
 			heading += 1.0;
 		}
-		direction = { (float)cos(heading * 3.14 / 180.0), (float)sin(heading * 3.14 / 180.0) };
+		direction
+			= { (float)cos(math::deg_to_rad(heading)), (float)sin(math::deg_to_rad(heading)) };
 
 		rect.x += direction.x * speed;
 		rect.y += direction.y * speed;

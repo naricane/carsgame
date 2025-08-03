@@ -8,6 +8,7 @@ deps = [
 
 src = [
   'src/main.cpp',
+  'src/Math.cpp'
 ]
 
 executable('carsgame', src, include_directories : 'src', dependencies : deps)
