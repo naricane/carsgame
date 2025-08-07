@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Time.hpp"
 
 int
 main(int argc, char** args)
@@ -30,6 +31,14 @@ main(int argc, char** args)
 
 	Game game(renderer);
 
+	double t = 0.0;
+	const double dt = 0.01;
+
+	double current_time = time::real();
+	double accumulator = 0.0;
+
+	int ticks = 0;
+
 	while (running) {
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
@@ -40,11 +49,22 @@ main(int argc, char** args)
 					break;
 			}
 		}
+		double new_time = time::real();
+		double frame_time = new_time - current_time;
+		current_time = new_time;
 
-		game.update();
+		accumulator += frame_time;
+
+		while (accumulator >= dt) {
+			ticks++;
+			game.update();
+			accumulator -= dt;
+			t += dt;
+		}
 
 		SDL_RenderClear(renderer);
-		game.draw(renderer);
+		const double alpha = accumulator / dt;
+		game.draw(renderer, alpha);
 		SDL_RenderPresent(renderer);
 	}
 

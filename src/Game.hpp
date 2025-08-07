@@ -10,5 +10,5 @@ private:
 public:
 	Game(SDL_Renderer* renderer);
 	void update();
-	void draw(SDL_Renderer* renderer);
+	void draw(SDL_Renderer* renderer, double alpha);
 };

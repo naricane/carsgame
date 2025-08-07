@@ -15,21 +15,29 @@ Car::update()
 	const bool* keys = SDL_GetKeyboardState(nullptr);
 	speed = 0.0;
 	if (keys[SDL_SCANCODE_UP]) {
-		speed = 2.0;
+		speed = 4.0;
 	}
 	if (keys[SDL_SCANCODE_LEFT]) {
-		heading -= 1.0;
+		heading -= 2.0;
 	}
 	if (keys[SDL_SCANCODE_RIGHT]) {
-		heading += 1.0;
+		heading += 2.0;
 	}
 	direction = { (float)cos(math::deg_to_rad(heading)), (float)sin(math::deg_to_rad(heading)) };
 
+	previous_rect = rect;
 	rect.x += direction.x * speed;
 	rect.y += direction.y * speed;
 }
+
 void
-Car::draw(SDL_Renderer* renderer)
+Car::draw(SDL_Renderer* renderer, double alpha)
 {
-	SDL_RenderTextureRotated(renderer, texture, nullptr, &rect, heading, nullptr, SDL_FLIP_NONE);
+	SDL_FRect draw_rect = rect;
+	draw_rect.x = rect.x * alpha + previous_rect.x * (1.0 - alpha);
+	draw_rect.y = rect.y * alpha + previous_rect.y * (1.0 - alpha);
+
+	SDL_RenderTextureRotated(
+		renderer, texture, nullptr, &draw_rect, heading, nullptr, SDL_FLIP_NONE
+	);
 }

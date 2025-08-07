@@ -10,7 +10,8 @@ src = [
   'src/Car.cpp',
   'src/Game.cpp',
   'src/main.cpp',
-  'src/Math.cpp'
+  'src/Math.cpp',
+  'src/Time.cpp'
 ]
 
 executable('carsgame', src, include_directories : 'src', dependencies : deps)

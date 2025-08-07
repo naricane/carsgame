@@ -12,7 +12,7 @@ Game::update()
 }
 
 void
-Game::draw(SDL_Renderer* renderer)
+Game::draw(SDL_Renderer* renderer, double alpha)
 {
-	car.draw(renderer);
+	car.draw(renderer, alpha);
 }
