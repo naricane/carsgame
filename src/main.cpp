@@ -1,3 +1,5 @@
+#include "Constants.hpp"
+#include "Editor.hpp"
 #include "Game.hpp"
 #include "Time.hpp"
 
@@ -12,7 +14,9 @@ main(int argc, char** args)
 		return -1;
 	}
 
-	window = SDL_CreateWindow("carsgame", 800, 600, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow(
+		"carsgame", DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE
+	);
 	if (!window) {
 		SDL_Log("SDL_CreateWindow() Error: %s", SDL_GetError());
 		return -1;
@@ -29,7 +33,8 @@ main(int argc, char** args)
 	SDL_Event event;
 	bool running = true;
 
-	Game game(renderer);
+	// Game game(renderer);
+	Editor editor(renderer);
 
 	double t = 0.0;
 	const double dt = 0.01;
@@ -48,6 +53,7 @@ main(int argc, char** args)
 				default:
 					break;
 			}
+			editor.handle_events(event);
 		}
 		double new_time = time::real();
 		double frame_time = new_time - current_time;
@@ -57,14 +63,16 @@ main(int argc, char** args)
 
 		while (accumulator >= dt) {
 			ticks++;
-			game.update();
+			// game.update();
+			editor.update();
 			accumulator -= dt;
 			t += dt;
 		}
 
 		SDL_RenderClear(renderer);
 		const double alpha = accumulator / dt;
-		game.draw(renderer, alpha);
+		// game.draw(renderer, alpha);
+		editor.draw(renderer, alpha);
 		SDL_RenderPresent(renderer);
 	}
 

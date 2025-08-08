@@ -115,6 +115,9 @@ operator/=(Vec2& a, float b)
 namespace math {
 
 float
+clamp(float value, float min, float max);
+
+float
 deg_to_rad(float deg);
 
 float

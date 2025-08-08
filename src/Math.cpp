@@ -37,6 +37,18 @@ angle(Vec2 a, Vec2 b)
 namespace math {
 
 float
+clamp(float value, float min, float max)
+{
+	if (value > max) {
+		return max;
+	} else if (value < min) {
+		return min;
+	} else {
+		return value;
+	}
+}
+
+float
 deg_to_rad(float deg)
 {
 	return deg * M_PI / 180.f;

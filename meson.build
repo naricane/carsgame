@@ -8,6 +8,8 @@ deps = [
 
 src = [
   'src/Car.cpp',
+  'src/Camera.cpp',
+  'src/Editor.cpp',
   'src/Game.cpp',
   'src/main.cpp',
   'src/Math.cpp',
