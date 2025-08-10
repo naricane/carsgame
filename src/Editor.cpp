@@ -1,10 +1,12 @@
 #include "Editor.hpp"
-#include <SDL3_image/SDL_image.h>
+#include "Texture.hpp"
+#include "Tile.hpp"
 #include <cstdio>
 
 Editor::Editor(SDL_Renderer* renderer)
+	: tile_textures(renderer)
 {
-	texture = IMG_LoadTexture(renderer, "assets/tiles/asphalt.png");
+	cursor = load_texture(renderer, "assets/editor/cursor.png");
 }
 
 void
@@ -44,6 +46,17 @@ Editor::handle_events(SDL_Event& event)
 void
 Editor::update()
 {
+	float mouse_x, mouse_y;
+	SDL_GetMouseState(&mouse_x, &mouse_y);
+
+	Vec2 mouse_world = camera.to_world({ mouse_x, mouse_y });
+	Vec2 mouse_tile = { std::floor(mouse_world.x / 16.f), std::floor(mouse_world.y / 16.f) };
+
+	cursor_rect = { mouse_tile.x * 16.f, mouse_tile.y * 16.f, 16.f, 16.f };
+
+	if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_LEFT) {
+		tiles[mouse_tile.x + mouse_tile.y * 64] = TileType::Asphalt;
+	}
 }
 
 void
@@ -51,9 +64,14 @@ Editor::draw(SDL_Renderer* renderer, double alpha)
 {
 	for (size_t y = 0; y < 64; y++) {
 		for (size_t x = 0; x < 64; x++) {
-			SDL_FRect draw_rect = camera.to_screen({ x * 16.f, y * 16.f, 16.f, 16.f });
+			SDL_FRect draw_rect = camera.to_screen(
+				{ float(x * TILE_SIZE), float(y * TILE_SIZE), TILE_SIZE, TILE_SIZE }
+			);
 
-			SDL_RenderTexture(renderer, texture, nullptr, &draw_rect);
+			SDL_RenderTexture(renderer, tile_textures[tiles[x + y * 64]], nullptr, &draw_rect);
 		}
 	}
+
+	SDL_FRect draw_rect = camera.to_screen(cursor_rect);
+	SDL_RenderTexture(renderer, cursor, nullptr, &draw_rect);
 }

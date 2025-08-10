@@ -2,24 +2,21 @@
 #include "Camera.hpp"
 #include "Constants.hpp"
 #include <SDL3/SDL.h>
-#include <array>
-
-enum class TileType
-{
-	None,
-	Asphalt
-};
+#include <Tile.hpp>
 
 class Editor
 {
 private:
-	std::array<TileType, 64 * 64> tiles;
-	SDL_Texture* texture;
+	TileTextures tile_textures;
+	std::array<TileType, 64 * 64> tiles = {};
 	Camera camera;
 
 	Vec2 last_mouse_position;
 	bool dragging = false;
 	uint32_t window_width = DEFAULT_WINDOW_WIDTH, window_height = DEFAULT_WINDOW_HEIGHT;
+
+	SDL_Texture* cursor;
+	SDL_FRect cursor_rect;
 
 public:
 	Editor(SDL_Renderer* renderer);

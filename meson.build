@@ -13,6 +13,8 @@ src = [
   'src/Game.cpp',
   'src/main.cpp',
   'src/Math.cpp',
+  'src/Texture.cpp',
+  'src/Tile.cpp',
   'src/Time.cpp'
 ]
 
