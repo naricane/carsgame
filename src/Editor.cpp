@@ -4,7 +4,7 @@
 #include <cstdio>
 
 Editor::Editor(SDL_Renderer* renderer)
-	: tile_textures(renderer)
+	: tilemap(renderer)
 {
 	cursor = load_texture(renderer, "assets/editor/cursor.png");
 }
@@ -50,28 +50,19 @@ Editor::update()
 	SDL_GetMouseState(&mouse_x, &mouse_y);
 
 	Vec2 mouse_world = camera.to_world({ mouse_x, mouse_y });
-	Vec2 mouse_tile = { std::floor(mouse_world.x / 16.f), std::floor(mouse_world.y / 16.f) };
+	int tile_x = int(mouse_world.x) >> 4, tile_y = int(mouse_world.y) >> 4;
 
-	cursor_rect = { mouse_tile.x * 16.f, mouse_tile.y * 16.f, 16.f, 16.f };
+	cursor_rect = { float(tile_x * TILE_SIZE), float(tile_y * TILE_SIZE), TILE_SIZE, TILE_SIZE };
 
 	if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_LEFT) {
-		tiles[mouse_tile.x + mouse_tile.y * 64] = TileType::Asphalt;
+		tilemap.set_tile(tile_x, tile_y);
 	}
 }
 
 void
 Editor::draw(SDL_Renderer* renderer, double alpha)
 {
-	for (size_t y = 0; y < 64; y++) {
-		for (size_t x = 0; x < 64; x++) {
-			SDL_FRect draw_rect = camera.to_screen(
-				{ float(x * TILE_SIZE), float(y * TILE_SIZE), TILE_SIZE, TILE_SIZE }
-			);
-
-			SDL_RenderTexture(renderer, tile_textures[tiles[x + y * 64]], nullptr, &draw_rect);
-		}
-	}
-
+	tilemap.draw(renderer, camera);
 	SDL_FRect draw_rect = camera.to_screen(cursor_rect);
 	SDL_RenderTexture(renderer, cursor, nullptr, &draw_rect);
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include "Camera.hpp"
 #include "Constants.hpp"
+#include "Tilemap.hpp"
 #include <SDL3/SDL.h>
 #include <Tile.hpp>
 
 class Editor
 {
 private:
-	TileTextures tile_textures;
-	std::array<TileType, 64 * 64> tiles = {};
+	Tilemap tilemap;
 	Camera camera;
 
 	Vec2 last_mouse_position;
