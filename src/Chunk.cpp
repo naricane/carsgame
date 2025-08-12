@@ -1,17 +1,15 @@
 #include "Chunk.hpp"
 #include <cstdio>
 
-void
-Chunk::set_tile(int x, int y)
+Chunk::Chunk(Vec2i index)
+	: index(index)
 {
-	tiles[x + y * CHUNK_SIZE] = TileType::Asphalt;
 }
 
 void
-Chunk::set_index(int x, int y)
+Chunk::set_tile(Vec2i tile_position)
 {
-	index_x = x;
-	index_y = y;
+	tiles[tile_position.x + tile_position.y * CHUNK_SIZE] = TileType::Asphalt;
 }
 
 void
@@ -21,8 +19,8 @@ Chunk::draw(SDL_Renderer* renderer, Camera& camera, TileTextures& tile_textures)
 		for (size_t x = 0; x < CHUNK_SIZE; x++) {
 			SDL_FRect draw_rect = camera.to_screen(
 				{
-					float(x * TILE_SIZE) + index_x * int(TILE_SIZE * CHUNK_SIZE),
-					float(y * TILE_SIZE) + index_y * int(TILE_SIZE * CHUNK_SIZE),
+					float(int(x * TILE_SIZE) + index.x * int(TILE_SIZE * CHUNK_SIZE)),
+					float(int(y * TILE_SIZE) + index.y * int(TILE_SIZE * CHUNK_SIZE)),
 					TILE_SIZE,
 					TILE_SIZE,
 				}

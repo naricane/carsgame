@@ -46,17 +46,26 @@ Editor::handle_events(SDL_Event& event)
 void
 Editor::update()
 {
-	float mouse_x, mouse_y;
-	SDL_GetMouseState(&mouse_x, &mouse_y);
+	Vec2 mouse_position;
+	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 
-	Vec2 mouse_world = camera.to_world({ mouse_x, mouse_y });
-	int tile_x = int(mouse_world.x) >> 4, tile_y = int(mouse_world.y) >> 4;
-
-	cursor_rect = { float(tile_x * TILE_SIZE), float(tile_y * TILE_SIZE), TILE_SIZE, TILE_SIZE };
+	Vec2 mouse_world = camera.to_world({ mouse_position.x, mouse_position.y });
+	int tile_size_bits = log2(TILE_SIZE);
+	Vec2i tile_position{
+		int(mouse_world.x) >> tile_size_bits,
+		int(mouse_world.y) >> tile_size_bits,
+	};
 
 	if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON_LEFT) {
-		tilemap.set_tile(tile_x, tile_y);
+		tilemap.set_tile(tile_position);
 	}
+
+	cursor_rect = {
+		float(tile_position.x * TILE_SIZE),
+		float(tile_position.y * TILE_SIZE),
+		TILE_SIZE,
+		TILE_SIZE,
+	};
 }
 
 void

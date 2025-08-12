@@ -13,7 +13,8 @@ private:
 
 	Vec2 last_mouse_position;
 	bool dragging = false;
-	uint32_t window_width = DEFAULT_WINDOW_WIDTH, window_height = DEFAULT_WINDOW_HEIGHT;
+	uint32_t window_width = DEFAULT_WINDOW_WIDTH;
+	uint32_t window_height = DEFAULT_WINDOW_HEIGHT;
 
 	SDL_Texture* cursor;
 	SDL_FRect cursor_rect;

@@ -13,6 +13,6 @@ private:
 
 public:
 	Tilemap(SDL_Renderer* renderer);
-	void set_tile(int x, int y);
+	void set_tile(Vec2i tile_position);
 	void draw(SDL_Renderer* renderer, Camera& camera);
 };

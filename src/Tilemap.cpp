@@ -7,17 +7,29 @@ Tilemap::Tilemap(SDL_Renderer* renderer)
 }
 
 void
-Tilemap::set_tile(int x, int y)
+Tilemap::set_tile(Vec2i tile_position)
 {
-	int chunk_size_bits = 6;
+	int chunk_size_bits = log2(CHUNK_SIZE);
 	int chunk_size_mask = (1 << chunk_size_bits) - 1;
 
-	int32_t chunk_x = x >> chunk_size_bits, chunk_y = y >> chunk_size_bits;
-	uint64_t key = (uint64_t(std::bit_cast<uint32_t>(chunk_x)) << 32)
-		| uint64_t(std::bit_cast<uint32_t>(chunk_y));
+	Vec2i chunk_index = {
+		tile_position.x >> chunk_size_bits,
+		tile_position.y >> chunk_size_bits,
+	};
+	uint64_t key = (uint64_t(std::bit_cast<uint32_t>(chunk_index.x)) << 32)
+		| uint64_t(std::bit_cast<uint32_t>(chunk_index.y));
 
-	chunks[key].set_tile(x & chunk_size_mask, y & chunk_size_mask);
-	chunks[key].set_index(chunk_x, chunk_y);
+	Vec2i tile_position_in_chunk = {
+		tile_position.x & chunk_size_mask,
+		tile_position.y & chunk_size_mask,
+	};
+
+	if (chunks.contains(key)) {
+		chunks.at(key).set_tile(tile_position_in_chunk);
+	} else {
+		chunks.emplace(key, chunk_index);
+		chunks.at(key).set_tile(tile_position_in_chunk);
+	}
 }
 
 void
