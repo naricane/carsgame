@@ -26,16 +26,21 @@ Camera::to_screen(Vec2 world)
 SDL_FRect
 Camera::to_screen(SDL_FRect world)
 {
-	return { (world.x - offset.x) * zoom_value,
-			 (world.y - offset.y) * zoom_value,
-			 world.w * zoom_value,
-			 world.h * zoom_value };
+	return {
+		(world.x - offset.x) * zoom_value,
+		(world.y - offset.y) * zoom_value,
+		world.w * zoom_value,
+		world.h * zoom_value,
+	};
 }
 
 Vec2
 Camera::to_world(Vec2 screen)
 {
-	return { screen.x / zoom_value + offset.x, screen.y / zoom_value + offset.y };
+	return {
+		screen.x / zoom_value + offset.x,
+		screen.y / zoom_value + offset.y,
+	};
 }
 
 float
