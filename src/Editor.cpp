@@ -30,9 +30,9 @@ Editor::handle_events(SDL_Event& event)
 			}
 			break;
 		case SDL_EVENT_MOUSE_WHEEL:
-			camera.pan_around(Vec2{ window_width / 2.f, window_height / 2.f });
+			camera.pan_around(Vec2{ event.wheel.mouse_x, event.wheel.mouse_y });
 			camera.zoom_in(event.wheel.integer_y);
-			camera.pan_around(-Vec2{ window_width / 2.f, window_height / 2.f });
+			camera.pan_around(-Vec2{ event.wheel.mouse_x, event.wheel.mouse_y });
 			break;
 		case SDL_EVENT_WINDOW_RESIZED:
 			window_width = event.window.data1;
