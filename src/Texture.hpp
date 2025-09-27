@@ -4,6 +4,14 @@
 #include <SDL3/SDL_surface.h>
 #include <SDL3_image/SDL_image.h>
 #include <string_view>
+#include <vector>
 
-SDL_Texture*
-load_texture(SDL_Renderer* renderer, std::string_view path);
+class GameTextures
+{
+private:
+	std::vector<SDL_Texture*> textures;
+
+public:
+	uint32_t load_texture(SDL_Renderer* renderer, std::string_view path);
+	SDL_Texture* texture(uint32_t id);
+};

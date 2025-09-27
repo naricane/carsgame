@@ -1,6 +1,7 @@
 #pragma once
 #include "Camera.hpp"
 #include "Constants.hpp"
+#include "Texture.hpp"
 #include "Tilemap.hpp"
 #include <SDL3/SDL.h>
 #include <Tile.hpp>
@@ -8,7 +9,9 @@
 class Editor
 {
 private:
+	GameTextures game_textures;
 	Tilemap tilemap;
+	TileTextures tile_textures;
 	Camera camera;
 
 	Vec2 last_mouse_position;
@@ -16,7 +19,7 @@ private:
 	uint32_t window_width = DEFAULT_WINDOW_WIDTH;
 	uint32_t window_height = DEFAULT_WINDOW_HEIGHT;
 
-	SDL_Texture* cursor;
+	uint32_t cursor;
 	SDL_FRect cursor_rect;
 
 public:

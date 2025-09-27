@@ -1,10 +1,6 @@
 #include "Tilemap.hpp"
+#include "Texture.hpp"
 #include "Tile.hpp"
-
-Tilemap::Tilemap(SDL_Renderer* renderer)
-	: tile_textures(renderer)
-{
-}
 
 void
 Tilemap::set_tile(Vec2i tile_position)
@@ -24,18 +20,23 @@ Tilemap::set_tile(Vec2i tile_position)
 		tile_position.y & chunk_size_mask,
 	};
 
-	if (chunks.contains(key)) {
-		chunks.at(key).set_tile(tile_position_in_chunk);
-	} else {
-		chunks.emplace(key, chunk_index);
-		chunks.at(key).set_tile(tile_position_in_chunk);
-	}
+	chunks[key].set_tile(tile_position_in_chunk);
 }
 
 void
-Tilemap::draw(SDL_Renderer* renderer, Camera& camera)
+Tilemap::draw(
+	SDL_Renderer* renderer,
+	GameTextures& game_textures,
+	TileTextures& tile_textures,
+	Camera& camera
+)
 {
 	for (auto& chunk : chunks) {
-		chunk.second.draw(renderer, camera, tile_textures);
+		Vec2i index = {
+			int32_t(chunk.first >> 32),
+			int32_t(chunk.first),
+		};
+
+		chunk.second.draw(renderer, index, game_textures, tile_textures, camera);
 	}
 }

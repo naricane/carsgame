@@ -1,9 +1,12 @@
 #include "Tile.hpp"
 #include "Texture.hpp"
 #include <SDL3_image/SDL_image.h>
+#include <cstdio>
 
-TileTextures::TileTextures(SDL_Renderer* renderer)
+TileTextures::TileTextures(SDL_Renderer* renderer, GameTextures& game_textures)
 {
-	textures[std::size_t(TileType::None)] = load_texture(renderer, "assets/tiles/none.png");
-	textures[std::size_t(TileType::Asphalt)] = load_texture(renderer, "assets/tiles/asphalt.png");
+	texture_ids[std::size_t(TileType::None)]
+		= game_textures.load_texture(renderer, "assets/tiles/none.png");
+	texture_ids[std::size_t(TileType::Asphalt)]
+		= game_textures.load_texture(renderer, "assets/tiles/asphalt.png");
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.hpp"
 #include <SDL3/SDL_render.h>
 #include <array>
 
@@ -15,10 +16,10 @@ enum class TileType
 class TileTextures
 {
 private:
-	std::array<SDL_Texture*, std::size_t(TileType::Max)> textures;
+	std::array<uint32_t, std::size_t(TileType::Max)> texture_ids;
 
 public:
-	TileTextures(SDL_Renderer* renderer);
+	TileTextures(SDL_Renderer* renderer, GameTextures& game_textures);
 
-	SDL_Texture* operator[](TileType tile_type) { return textures[int(tile_type)]; }
+	uint32_t operator[](TileType tile_type) { return texture_ids[std::size_t(tile_type)]; }
 };

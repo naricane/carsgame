@@ -9,10 +9,14 @@ class Chunk
 {
 private:
 	std::array<TileType, CHUNK_SIZE * CHUNK_SIZE> tiles = {};
-	Vec2i index;
 
 public:
-	Chunk(Vec2i index);
 	void set_tile(Vec2i tile_position);
-	void draw(SDL_Renderer* renderer, Camera& camera, TileTextures& tile_textures);
+	void draw(
+		SDL_Renderer* renderer,
+		Vec2i index,
+		GameTextures& game_textures,
+		TileTextures tile_textures,
+		Camera& camera
+	);
 };

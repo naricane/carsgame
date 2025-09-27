@@ -1,11 +1,16 @@
 #include "Texture.hpp"
 
-SDL_Texture*
-load_texture(SDL_Renderer* renderer, std::string_view path)
+uint32_t
+GameTextures::load_texture(SDL_Renderer* renderer, std::string_view path)
 {
-	SDL_Texture* texture;
-	texture = IMG_LoadTexture(renderer, path.data());
-	SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
+	textures.push_back(IMG_LoadTexture(renderer, path.data()));
+	SDL_SetTextureScaleMode(textures.back(), SDL_SCALEMODE_NEAREST);
 
-	return texture;
+	return textures.size() - 1;
+}
+
+SDL_Texture*
+GameTextures::texture(uint32_t id)
+{
+	return textures[id];
 }

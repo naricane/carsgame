@@ -8,11 +8,14 @@
 class Tilemap
 {
 private:
-	TileTextures tile_textures;
 	std::unordered_map<uint64_t, Chunk> chunks;
 
 public:
-	Tilemap(SDL_Renderer* renderer);
 	void set_tile(Vec2i tile_position);
-	void draw(SDL_Renderer* renderer, Camera& camera);
+	void draw(
+		SDL_Renderer* renderer,
+		GameTextures& game_textures,
+		TileTextures& tile_textures,
+		Camera& camera
+	);
 };
