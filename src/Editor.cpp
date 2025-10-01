@@ -2,10 +2,10 @@
 #include "Texture.hpp"
 #include "Tile.hpp"
 
-Editor::Editor(SDL_Renderer* renderer)
-	: tile_textures(renderer, game_textures)
+Editor::Editor(Renderer& renderer)
+	: tile_textures(renderer)
 {
-	cursor = game_textures.load_texture(renderer, "assets/editor/cursor.png");
+	cursor = renderer.load_texture("assets/editor/cursor.png");
 }
 
 void
@@ -68,9 +68,9 @@ Editor::update()
 }
 
 void
-Editor::draw(SDL_Renderer* renderer, double alpha)
+Editor::draw(Renderer& renderer, double alpha)
 {
-	tilemap.draw(renderer, game_textures, tile_textures, camera);
-	SDL_FRect draw_rect = camera.to_screen(cursor_rect);
-	SDL_RenderTexture(renderer, game_textures.texture(cursor), nullptr, &draw_rect);
+	renderer.set_camera(camera);
+	tilemap.draw(renderer, tile_textures);
+	renderer.draw(cursor, cursor_rect);
 }

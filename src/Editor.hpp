@@ -1,6 +1,7 @@
 #pragma once
 #include "Camera.hpp"
 #include "Constants.hpp"
+#include "Renderer.hpp"
 #include "Texture.hpp"
 #include "Tilemap.hpp"
 #include <SDL3/SDL.h>
@@ -9,7 +10,6 @@
 class Editor
 {
 private:
-	GameTextures game_textures;
 	Tilemap tilemap;
 	TileTextures tile_textures;
 	Camera camera;
@@ -23,8 +23,8 @@ private:
 	SDL_FRect cursor_rect;
 
 public:
-	Editor(SDL_Renderer* renderer);
+	Editor(Renderer& renderer);
 	void handle_events(SDL_Event& event);
 	void update();
-	void draw(SDL_Renderer* renderer, double alpha);
+	void draw(Renderer& renderer, double alpha);
 };

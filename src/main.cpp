@@ -1,13 +1,13 @@
 #include "Constants.hpp"
 #include "Editor.hpp"
 #include "Game.hpp"
+#include "Renderer.hpp"
 #include "Time.hpp"
 
 int
 main(int argc, char** args)
 {
 	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
 
 	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		SDL_Log("SDL_Init() Error: %s", SDL_GetError());
@@ -22,13 +22,7 @@ main(int argc, char** args)
 		return -1;
 	}
 
-	renderer = SDL_CreateRenderer(window, nullptr);
-	if (!window) {
-		SDL_Log("SDL_CreateRenderer() Error: %s", SDL_GetError());
-		return -1;
-	}
-
-	SDL_SetRenderVSync(renderer, -1);
+	Renderer renderer = Renderer::make(window).value();
 
 	SDL_Event event;
 	bool running = true;
@@ -69,14 +63,13 @@ main(int argc, char** args)
 			t += dt;
 		}
 
-		SDL_RenderClear(renderer);
+		renderer.clear();
 		const double alpha = accumulator / dt;
 		// game.draw(renderer, alpha);
 		editor.draw(renderer, alpha);
-		SDL_RenderPresent(renderer);
+		renderer.display();
 	}
 
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }

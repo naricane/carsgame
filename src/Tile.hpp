@@ -1,5 +1,5 @@
 #pragma once
-#include "Texture.hpp"
+#include "Renderer.hpp"
 #include <SDL3/SDL_render.h>
 #include <array>
 
@@ -19,7 +19,7 @@ private:
 	std::array<uint32_t, std::size_t(TileType::Max)> texture_ids;
 
 public:
-	TileTextures(SDL_Renderer* renderer, GameTextures& game_textures);
+	TileTextures(Renderer& renderer);
 
 	uint32_t operator[](TileType tile_type) { return texture_ids[std::size_t(tile_type)]; }
 };

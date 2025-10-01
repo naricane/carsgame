@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Camera.hpp"
 #include "Chunk.hpp"
 #include "Tile.hpp"
 #include <unordered_map>
@@ -12,10 +11,5 @@ private:
 
 public:
 	void set_tile(Vec2i tile_position);
-	void draw(
-		SDL_Renderer* renderer,
-		GameTextures& game_textures,
-		TileTextures& tile_textures,
-		Camera& camera
-	);
+	void draw(Renderer& renderer, TileTextures& tile_textures);
 };

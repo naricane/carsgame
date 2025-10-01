@@ -1,5 +1,4 @@
 #include "Tilemap.hpp"
-#include "Texture.hpp"
 #include "Tile.hpp"
 
 void
@@ -24,12 +23,7 @@ Tilemap::set_tile(Vec2i tile_position)
 }
 
 void
-Tilemap::draw(
-	SDL_Renderer* renderer,
-	GameTextures& game_textures,
-	TileTextures& tile_textures,
-	Camera& camera
-)
+Tilemap::draw(Renderer& renderer, TileTextures& tile_textures)
 {
 	for (auto& chunk : chunks) {
 		Vec2i index = {
@@ -37,6 +31,6 @@ Tilemap::draw(
 			int32_t(chunk.first),
 		};
 
-		chunk.second.draw(renderer, index, game_textures, tile_textures, camera);
+		chunk.second.draw(renderer, index, tile_textures);
 	}
 }

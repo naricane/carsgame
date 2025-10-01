@@ -1,5 +1,5 @@
 project('carsgame', 'cpp',
-         default_options : 'cpp_std=c++20')
+         default_options : 'cpp_std=c++23')
 
 deps = [
     dependency('sdl3'),
@@ -14,6 +14,7 @@ src = [
   'src/Game.cpp',
   'src/main.cpp',
   'src/Math.cpp',
+  'src/Renderer.cpp',
   'src/Texture.cpp',
   'src/Tile.cpp',
   'src/Tilemap.cpp',
