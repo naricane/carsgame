@@ -17,10 +17,10 @@ private:
 public:
 	static std::optional<Renderer> make(SDL_Window* window);
 
-	uint32_t load_texture(std::string_view path);
+	TextureHandle load_texture(std::string_view path);
 
 	void set_camera(Camera& camera);
-	void clear();
-	void draw(uint32_t texture_id, SDL_FRect& rect);
-	void display();
+	void clear() const;
+	void draw(const TextureHandle& texture_id, const SDL_FRect& rect) const;
+	void display() const;
 };

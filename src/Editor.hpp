@@ -19,7 +19,7 @@ private:
 	uint32_t window_width = DEFAULT_WINDOW_WIDTH;
 	uint32_t window_height = DEFAULT_WINDOW_HEIGHT;
 
-	uint32_t cursor;
+	TextureHandle cursor;
 	SDL_FRect cursor_rect;
 
 public:

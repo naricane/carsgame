@@ -16,10 +16,10 @@ enum class TileType
 class TileTextures
 {
 private:
-	std::array<uint32_t, std::size_t(TileType::Max)> texture_ids;
+	std::array<TextureHandle, std::size_t(TileType::Max)> texture_handles;
 
 public:
 	TileTextures(Renderer& renderer);
 
-	uint32_t operator[](TileType tile_type) { return texture_ids[std::size_t(tile_type)]; }
+	TextureHandle operator[](TileType tile_type) { return texture_handles[std::size_t(tile_type)]; }
 };

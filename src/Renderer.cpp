@@ -1,4 +1,5 @@
 #include "Renderer.hpp"
+#include "Texture.hpp"
 #include <optional>
 
 Renderer::Renderer(SDL_Renderer* sdl_renderer)
@@ -19,7 +20,7 @@ Renderer::make(SDL_Window* window)
 	return Renderer(renderer);
 }
 
-uint32_t
+TextureHandle
 Renderer::load_texture(std::string_view path)
 {
 	return game_textures.load_texture(sdl_renderer, path);
@@ -32,21 +33,21 @@ Renderer::set_camera(Camera& camera)
 }
 
 void
-Renderer::clear()
+Renderer::clear() const
 {
 	SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(sdl_renderer);
 }
 
 void
-Renderer::draw(uint32_t texture_id, SDL_FRect& rect)
+Renderer::draw(const TextureHandle& texture_handle, const SDL_FRect& rect) const
 {
 	SDL_FRect draw_rect = camera.to_screen(rect);
-	SDL_RenderTexture(sdl_renderer, game_textures.texture(texture_id), nullptr, &draw_rect);
+	SDL_RenderTexture(sdl_renderer, game_textures.texture(texture_handle), nullptr, &draw_rect);
 }
 
 void
-Renderer::display()
+Renderer::display() const
 {
 	SDL_RenderPresent(sdl_renderer);
 }
