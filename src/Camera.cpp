@@ -15,7 +15,7 @@ Camera::pan_around(Vec2 offset)
 }
 
 Vec2
-Camera::to_screen(Vec2 world)
+Camera::to_screen(Vec2 world) const
 {
 	return {
 		(world.x - offset.x) * zoom_value,
@@ -24,7 +24,7 @@ Camera::to_screen(Vec2 world)
 }
 
 SDL_FRect
-Camera::to_screen(SDL_FRect world)
+Camera::to_screen(SDL_FRect world) const
 {
 	return {
 		(world.x - offset.x) * zoom_value,
@@ -35,16 +35,10 @@ Camera::to_screen(SDL_FRect world)
 }
 
 Vec2
-Camera::to_world(Vec2 screen)
+Camera::to_world(Vec2 screen) const
 {
 	return {
 		screen.x / zoom_value + offset.x,
 		screen.y / zoom_value + offset.y,
 	};
-}
-
-float
-Camera::zoom()
-{
-	return zoom_value;
 }
